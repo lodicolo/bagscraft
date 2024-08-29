@@ -1,10 +1,11 @@
 # BagsCraft
+# 01 - The First Voxel
 
-This is a repository following along [b3agz][gh-b3agz]'s "[Code a Game Like Minecraft in Unity][yt-playlist]" tutorial series on YouTube, but in Godot 4.3 instead of Unity.
+This branch covers the [first video][yt-video01] in [b3agz][b3agz]'s [tutorial series on YouTube][yt-playlist].
 
-Code for each video is stored in separate branches in this repository:
-- [01 - The First Voxel][gh-video01]
+The index with links to each video's branch can be found on [the repository homepage][gh-repohome].
 
 [gh-b3agz]: https://github.com/b3agz
+[gh-repohome]: https://github.com/lodicolo/bagscraft
 [yt-playlist]: https://www.youtube.com/playlist?list=PLVsTSlfj0qsWEJ-5eMtXsYp03Y9yF1dEn
-[gh-video01]: https://github.com/lodicolo/bagscraft/tree/01-the_first_voxel
+[yt-video01]: https://www.youtube.com/watch?v=h66IN1Pndd0&list=PLVsTSlfj0qsWEJ-5eMtXsYp03Y9yF1dEn
