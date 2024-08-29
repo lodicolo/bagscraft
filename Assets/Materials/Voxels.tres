@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ykprtq4fqmtf"]
+
+[ext_resource type="Texture2D" uid="uid://c2krwxcsfkreb" path="res://Assets/Textures/ReferenceTexture.png" id="1_xivsp"]
+
+[resource]
+albedo_texture = ExtResource("1_xivsp")
+texture_filter = 0
+texture_repeat = false
