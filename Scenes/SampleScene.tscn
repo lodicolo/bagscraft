@@ -18,7 +18,7 @@ ambient_light_color = Color(1, 1, 1, 1)
 [node name="Chunk" parent="." instance=ExtResource("1_l23j6")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 5, 5, 5)
+transform = Transform3D(0.707107, -0.270598, 0.653282, 0, 0.92388, 0.382684, -0.707107, -0.270598, 0.653282, 16, 16, 16)
 environment = SubResource("Environment_xl6kt")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
