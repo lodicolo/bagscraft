@@ -2,8 +2,5 @@
 
 [ext_resource type="Script" path="res://Scripts/Chunk.cs" id="1_kw2hj"]
 
-[node name="Chunk" type="Node3D" node_paths=PackedStringArray("_meshRenderer")]
+[node name="Chunk" type="Node3D"]
 script = ExtResource("1_kw2hj")
-_meshRenderer = NodePath("MeshRenderer")
-
-[node name="MeshRenderer" type="MeshInstance3D" parent="."]

@@ -5,10 +5,15 @@ using Godot;
 
 namespace BagsCraft.Scripts;
 
+[Tool]
 public partial class Chunk : Node3D
 {
-    [Export(PropertyHint.NodeType, nameof(MeshInstance3D))]
     private MeshInstance3D? _meshRenderer;
+
+    public Chunk()
+    {
+        AddChild(new MeshInstance3D { Name = "MeshRenderer" });
+    }
 
     public override void _Ready()
     {
