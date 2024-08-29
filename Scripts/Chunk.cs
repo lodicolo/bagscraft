@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Godot;
 
 namespace BagsCraft.Scripts;
 
-[Tool]
 public partial class Chunk : Node3D
 {
     [Export(PropertyHint.NodeType, nameof(MeshInstance3D))]
@@ -52,6 +52,6 @@ public partial class Chunk : Node3D
         var mesh = surfaceTool.Commit();
         _meshRenderer.Mesh = mesh;
 
-        Console.WriteLine("Generated mesh");
+        Debug.WriteLine("Generated mesh");
     }
 }

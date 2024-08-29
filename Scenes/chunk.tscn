@@ -1,25 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://cv10egidf2ehs"]
+[gd_scene load_steps=2 format=3 uid="uid://cv10egidf2ehs"]
 
 [ext_resource type="Script" path="res://Scripts/Chunk.cs" id="1_kw2hj"]
-[ext_resource type="Material" uid="uid://ykprtq4fqmtf" path="res://Assets/Materials/Voxels.tres" id="2_m1p60"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_tylqs"]
-_surfaces = [{
-"aabb": AABB(0, 0, 0, 1, 1, 1),
-"attribute_data": PackedByteArray("AACAPwAAgD8AAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAgD8AAIA/AAAAAAAAgL8AAAAAAAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAIC/AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIC/AACAPwAAAAAAAIA/AACAPw=="),
-"format": 34359742487,
-"index_count": 36,
-"index_data": PackedByteArray("AAABAAIAAgADAAQABQAGAAcABwAIAAkACQAKAAsACwAMAAkADQAOAA8ADwAQABEACQAGABIAEgATAAkADQAUAAsACwAVABYA"),
-"material": ExtResource("2_m1p60"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 23,
-"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAgD8AAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AACAPwAAgD8AAIA/MjMyM8xMzMz/3/8fOI5xnP8f/98cR1SV/9//HziOcZzMzMzMbVts2zKzzEzsRGGn/1//XzKzzIz/n/+fVFWpqv9f/18ys8yMzEwys05sYaf/H//fHEdUlczMzMxtW2zb/5//n1RVqar/3/8fOI5xnDIzMjPMTMzMMrPMTOxEYacyMzIzzEzMzP9f/18ys8yMMjMyM8xMzMz/H//fHEdUlTKzzEzsRGGnMrPMTOxEYaf/n/+fVFWpqg==")
-}]
 
 [node name="Chunk" type="Node3D" node_paths=PackedStringArray("_meshRenderer")]
 script = ExtResource("1_kw2hj")
 _meshRenderer = NodePath("MeshRenderer")
 
 [node name="MeshRenderer" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_tylqs")
