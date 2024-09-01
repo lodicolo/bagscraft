@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://vvy0ufabsexg"]
+[gd_scene load_steps=6 format=3 uid="uid://vvy0ufabsexg"]
 
-[ext_resource type="PackedScene" uid="uid://cv10egidf2ehs" path="res://Scenes/chunk.tscn" id="1_l23j6"]
+[ext_resource type="PackedScene" uid="uid://cv10egidf2ehs" path="res://Scenes/Chunk.tscn" id="1_l23j6"]
+[ext_resource type="PackedScene" uid="uid://gdfyx1qbyjb" path="res://Scenes/World.tscn" id="2_32mae"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0g83y"]
 
@@ -15,7 +16,10 @@ ambient_light_color = Color(1, 1, 1, 1)
 
 [node name="SampleScene" type="Node3D"]
 
-[node name="Chunk" parent="." instance=ExtResource("1_l23j6")]
+[node name="Chunk" parent="." node_paths=PackedStringArray("_world") instance=ExtResource("1_l23j6")]
+_world = NodePath("../World")
+
+[node name="World" parent="." instance=ExtResource("2_32mae")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.270598, 0.653282, 0, 0.92388, 0.382684, -0.707107, -0.270598, 0.653282, 16, 16, 16)

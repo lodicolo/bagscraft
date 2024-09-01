@@ -15,9 +15,11 @@ public partial class Chunk : Node3D
     private readonly List<int> _triangles = [];
     private readonly List<Vector2> _uvs = [];
 
-    private readonly bool[,,] _voxelMap = new bool[VoxelData.ChunkWidth, VoxelData.ChunkHeight, VoxelData.ChunkWidth];
+    private readonly byte[,,] _voxelMap = new byte[VoxelData.ChunkWidth, VoxelData.ChunkHeight, VoxelData.ChunkWidth];
 
     private string DebugName => $"{NativeInstance:x16} (\"{Name}\")";
+
+    [Export] private World? _world;
 
     public Chunk()
     {
@@ -29,12 +31,17 @@ public partial class Chunk : Node3D
 
     public override void _Ready()
     {
-        base._Ready();
-
         if (_meshRenderer == default)
         {
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("Failed to create mesh renderer");
         }
+
+        if (_world == default)
+        {
+            throw new InvalidOperationException($"Missing reference to a {nameof(World)} node.");
+        }
+
+        base._Ready();
 
         PopulateVoxelMap();
         CreateMeshData();
@@ -49,7 +56,12 @@ public partial class Chunk : Node3D
         for (int x = 0; x < VoxelData.ChunkWidth; ++x)
         for (int z = 0; z < VoxelData.ChunkWidth; ++z)
         {
-            _voxelMap[x, y, z] = true;
+            _voxelMap[x, y, z] = y switch
+            {
+                < 1 => 0,
+                VoxelData.ChunkHeight - 1 => 3,
+                _ => 1,
+            };
         }
 
         Debug.WriteLine($"[Chunk {DebugName}] Done populating voxel data");
@@ -67,7 +79,9 @@ public partial class Chunk : Node3D
             return false;
         }
 
-        return _voxelMap[x, y, z];
+        var blockTypeId = _voxelMap[x, y, z];
+        var blockType = _world?.BlockTypes[blockTypeId];
+        return blockType?.IsSolid ?? false;
     }
 
     private bool CheckVoxel(Vector3I positionInChunk) =>
@@ -110,10 +124,22 @@ public partial class Chunk : Node3D
                 continue;
             }
 
+            var blockTypeId = _voxelMap[x, y, z];
+            var blockType = _world?.BlockTypes[blockTypeId];
+            var textureId = blockType?.GetTextureId(p) ?? -1;
+
             for (var vi = 0; vi < 4; ++vi)
             {
                 _vertices.Add(positionInChunk + VoxelData.VoxelVerts[VoxelData.VoxelTris[p, vi]]);
-                _uvs.Add(VoxelData.VoxelUVs[vi]);
+            }
+
+            if (textureId >= 0)
+            {
+                AddTexture(textureId);
+            }
+            else
+            {
+                GD.PushWarning("Invalid texture ID/missing block type");
             }
 
             _triangles.Add(_vertexIndex + 0);
@@ -125,6 +151,21 @@ public partial class Chunk : Node3D
 
             _vertexIndex += 4;
         }
+    }
+
+    private void AddTexture(int textureId)
+    {
+        var x = textureId % VoxelData.TextureAtlasSizeInBlocks;
+        var y = textureId / VoxelData.TextureAtlasSizeInBlocks;
+
+        Vector2 uv = new(x, y);
+        uv *= VoxelData.NormalizedBlockTextureSize;
+        // uv.Y = 1 - uv.Y - VoxelData.NormalizedBlockTextureSize;
+
+        _uvs.Add(uv + new Vector2(0, VoxelData.NormalizedBlockTextureSize));
+        _uvs.Add(uv);
+        _uvs.Add(uv + new Vector2(VoxelData.NormalizedBlockTextureSize, 0));
+        _uvs.Add(uv + Vector2.One * VoxelData.NormalizedBlockTextureSize);
     }
 
     private void CreateMesh()
@@ -145,7 +186,7 @@ public partial class Chunk : Node3D
         }
 
         var material = GD.Load<StandardMaterial3D>("res://Assets/Materials/Voxels.tres");
-        surfaceTool.SetMaterial(material);
+        surfaceTool.SetMaterial(_world?.Material ?? material);
         surfaceTool.GenerateNormals();
 
         var mesh = surfaceTool.Commit();

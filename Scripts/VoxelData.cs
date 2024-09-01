@@ -4,8 +4,12 @@ namespace BagsCraft.Scripts;
 
 public static class VoxelData
 {
-    public static readonly int ChunkWidth = 5;
-    public static readonly int ChunkHeight = 15;
+    public const int ChunkWidth = 5;
+    public const int ChunkHeight = 15;
+
+    public const int TextureAtlasSizeInBlocks = 4;
+
+    public const float NormalizedBlockTextureSize = 1f / TextureAtlasSizeInBlocks;
 
     public static readonly Vector3[] VoxelVerts =
     [
