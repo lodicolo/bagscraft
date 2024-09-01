@@ -5,10 +5,10 @@ using Godot;
 
 namespace BagsCraft.Scripts;
 
-[Tool]
-public partial class Chunk : Node3D
+public partial class Chunk
 {
     private readonly MeshInstance3D _meshRenderer;
+    private readonly Node3D _node;
 
     private int _vertexIndex;
     private readonly List<Vector3> _vertices = [];
@@ -17,35 +17,45 @@ public partial class Chunk : Node3D
 
     private readonly byte[,,] _voxelMap = new byte[VoxelData.ChunkWidth, VoxelData.ChunkHeight, VoxelData.ChunkWidth];
 
-    private string DebugName => $"{NativeInstance:x16} (\"{Name}\")";
+    private string DebugName => $"Chunk-{Coord}";
 
-    [Export] private World? _world;
+    private readonly World _world;
 
-    public Chunk()
+    public readonly ChunkCoord Coord;
+    public readonly Vector3I Position;
+
+    public Chunk(ChunkCoord coord, World world)
     {
+        Coord = coord;
+        _world = world;
+
+        Position = new Vector3I(coord.X * VoxelData.ChunkWidth, 0, coord.Z * VoxelData.ChunkWidth);
+
         Debug.WriteLine($"[Chunk {DebugName}] Initializing...");
 
+        _node = new Node3D { Name = DebugName };
+        _node.Position = new Vector3(coord.X * VoxelData.ChunkWidth, 0, coord.Z * VoxelData.ChunkWidth);
+        _world.AddChild(_node);
+
         _meshRenderer = new MeshInstance3D { Name = "MeshRenderer" };
-        AddChild(_meshRenderer);
-    }
-
-    public override void _Ready()
-    {
-        if (_meshRenderer == default)
-        {
-            throw new InvalidOperationException("Failed to create mesh renderer");
-        }
-
-        if (_world == default)
-        {
-            throw new InvalidOperationException($"Missing reference to a {nameof(World)} node.");
-        }
-
-        base._Ready();
+        _node.AddChild(_meshRenderer);
 
         PopulateVoxelMap();
         CreateMeshData();
         CreateMesh();
+    }
+
+    public bool IsActive
+    {
+        get => _node.IsVisibleInTree();
+        set => _node.Visible = value;
+    }
+
+    public bool IsVoxelInChunk(int x, int y, int z)
+    {
+        return x is >= 0 and < VoxelData.ChunkWidth &&
+               y is >= 0 and < VoxelData.ChunkHeight &&
+               z is >= 0 and < VoxelData.ChunkWidth;
     }
 
     private void PopulateVoxelMap()
@@ -56,12 +66,8 @@ public partial class Chunk : Node3D
         for (int x = 0; x < VoxelData.ChunkWidth; ++x)
         for (int z = 0; z < VoxelData.ChunkWidth; ++z)
         {
-            _voxelMap[x, y, z] = y switch
-            {
-                < 1 => 1,
-                VoxelData.ChunkHeight - 1 => 3,
-                _ => 2,
-            };
+            var voxelPosition = Position + new Vector3I(x, y, z);
+            _voxelMap[x, y, z] = _world.GetVoxel(voxelPosition.X, voxelPosition.Y, voxelPosition.Z);
         }
 
         Debug.WriteLine($"[Chunk {DebugName}] Done populating voxel data");

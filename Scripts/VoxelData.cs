@@ -7,8 +7,11 @@ public static class VoxelData
     public const int ChunkWidth = 5;
     public const int ChunkHeight = 15;
 
-    public const int TextureAtlasSizeInBlocks = 4;
+    public const int WorldSizeInChunks = 50;
+    public const int WorldSizeInBlocks = WorldSizeInChunks * ChunkWidth;
+    public const int ViewDistanceInChunks = 8;
 
+    public const int TextureAtlasSizeInBlocks = 4;
     public const float NormalizedBlockTextureSize = 1f / TextureAtlasSizeInBlocks;
 
     public static readonly Vector3[] VoxelVerts =
