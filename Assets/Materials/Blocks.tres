@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://cvyow74ajchkg" path="res://Assets/Textures/Blocks.png" id="1_g2k71"]
 
 [resource]
+diffuse_mode = 3
+specular_mode = 1
 albedo_texture = ExtResource("1_g2k71")
 texture_filter = 0
 texture_repeat = false
