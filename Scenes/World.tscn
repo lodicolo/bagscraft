@@ -1,8 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://gdfyx1qbyjb"]
+[gd_scene load_steps=9 format=3 uid="uid://gdfyx1qbyjb"]
 
 [ext_resource type="Script" path="res://Scripts/World.cs" id="1_a5s8e"]
 [ext_resource type="Material" uid="uid://1sm1ms8ed1fe" path="res://Assets/Materials/Blocks.tres" id="2_5mheh"]
 [ext_resource type="Script" path="res://Scripts/BlockType.cs" id="3_nr1r2"]
+
+[sub_resource type="Resource" id="Resource_i8cth"]
+script = ExtResource("3_nr1r2")
+BlockName = "Air"
+IsSolid = false
+BackFaceTexture = 0
+FrontFaceTexture = 0
+TopFaceTexture = 0
+BottomFaceTexture = 0
+LeftFaceTexture = 0
+RightFaceTexture = 0
 
 [sub_resource type="Resource" id="Resource_xfar2"]
 script = ExtResource("3_nr1r2")
@@ -51,4 +62,4 @@ RightFaceTexture = 13
 [node name="World" type="Node3D"]
 script = ExtResource("1_a5s8e")
 Material = ExtResource("2_5mheh")
-BlockTypes = [SubResource("Resource_xfar2"), SubResource("Resource_hr5ny"), SubResource("Resource_gtybr"), SubResource("Resource_62c76")]
+BlockTypes = [SubResource("Resource_i8cth"), SubResource("Resource_xfar2"), SubResource("Resource_hr5ny"), SubResource("Resource_gtybr"), SubResource("Resource_62c76")]

@@ -58,9 +58,9 @@ public partial class Chunk : Node3D
         {
             _voxelMap[x, y, z] = y switch
             {
-                < 1 => 0,
+                < 1 => 1,
                 VoxelData.ChunkHeight - 1 => 3,
-                _ => 1,
+                _ => 2,
             };
         }
 
